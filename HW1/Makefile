@@ -17,7 +17,7 @@ all:
 build:
 	gcc 
 debug:
-	gcc -g -Wall -Werror main.c input_strings.c
+	gcc -g -Wall -Werror main.c  check_string.c input_strings.c sort.c
 run:
 	./a.out
 clean:
