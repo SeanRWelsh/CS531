@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-
+#include "character_strings.h"
 
 /*Check legal Characters ensures the following characters are not in the string passed to it
  * !’, ’@’, ’#’, ’$’, ‘%’, ‘^’, ’(’, or ’)’. If one of these characters is found it prints to
@@ -17,8 +17,6 @@ int checkLegalCharacters(char *string_to_check){
 			printf("the character %c is not allowed\n", char_to_check);
 			return 1;
 		}
-
-		printf("current char = %c\n", char_to_check);
 	}
 	return 0;
 }

@@ -7,7 +7,7 @@ int checkBuffer();
 
 int main(void){
 	char *stringsptr[MAXINPUT];      //array of pointers that point to the strings in
-				   //the strings array
+					 //the strings array
 	char strings[MAXINPUT][MAXLEN];  //array of strings. Strings are generated from user input
 	int choice;                //stores the users choice to sort by acending or decending
 	char userInput[10];        //stores user input
@@ -54,5 +54,3 @@ int main(void){
 	}
 	return 0;
 }
-
-

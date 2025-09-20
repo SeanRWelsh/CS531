@@ -21,7 +21,7 @@ void inputString(char **stringsptr){
 		}else{
 			strcpy(*(stringsptr+i), userInput);
 		}
-		
+
 
 
 		printf("total number of strings accepted so far  is %d \n", i+1);

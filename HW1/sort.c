@@ -1,7 +1,5 @@
 #include <string.h>
-void ascendingSort(char choice){
-	//qsort();
-}
+#include "character_strings.h"
 
 void qsort(char *v[], int left, int right, char direction){
 	int i, last;
