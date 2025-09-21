@@ -5,20 +5,42 @@
 # Compiler flags:                                                                        #
 #    -g      -- Enable debugging                                                         #
 #    -Wall   -- Turn on all warnings                                                     #
-#    -Werror --                                                                          #
+#    -Werror -- Treat warnings as errors                                                 #
 #                                                                                        #
-# Using @ at the start of an action tells Make not to print this action.                 #
-#   So, by using @echo instead of echo , we can see the result of echo (the variable's   #
-#   value being printed) but not the echo command itself.                                #
 ##########################################################################################
+CC = gcc
+CFLAGS = -Wall -Werror -g
+OBJ = main.o check_string.o input_strings.o sort.o
+TARGET = string_sorter
 
-all:
-	@echo "build, run, clean"
-build:
-	gcc 
-debug:
-	gcc -g -Wall -Werror main.c  check_string.c input_strings.c sort.c
-run:
-	./a.out
+#default command
+all: build
+
+# build the program without debug flags
+build: $(OBJ)
+	$(CC) $(OBJ) -o $(TARGET)
+
+# build the program with debug flags
+debug: $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -o $(TARGET)
+
+#runs the program
+run: build
+	./$(TARGET)
+
+#delete build files
 clean:
-	rm -f a.out
+	rm -rf $(OBJ) $(TARGET)
+
+#compiles and sets dependencies for the object files
+main.o: main.c character_strings.h
+	$(CC) -c main.c
+
+check_string.o: check_string.c character_strings.h
+	$(CC) -c check_string.c
+
+input_strings.o: input_strings.c character_strings.h
+	$(CC) -c input_strings.c
+
+sort.o: sort.c character_strings.h
+	$(CC) -c sort.c

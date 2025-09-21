@@ -25,7 +25,6 @@ int checkLegalCharacters(char *string_to_check){
  * if no matches returns 0. If a match is found returns 1
  * */
 int checkDuplicate(char *string_to_check, char **string_array, int i){
-
 	for(int j = 0; j<i; j++){
 		if(strcmp(string_to_check, *(string_array+j)) == 0){
 			printf("string \" %s \" has already been entered please try again\n",
@@ -49,6 +48,7 @@ int checkStringLen(char *string_to_check){
 		return 1;
 	}
 
+	//removes '/n' character added by fgets before returning
 	string_to_check[strlen(string_to_check)-1] = '\0';
 	return 0;
 }

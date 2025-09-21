@@ -9,8 +9,8 @@ int main(void){
 	char *stringsptr[MAXINPUT];      //array of pointers that point to the strings in
 					 //the strings array
 	char strings[MAXINPUT][MAXLEN];  //array of strings. Strings are generated from user input
-	int choice;                //stores the users choice to sort by acending or decending
-	char userInput[10];        //stores user input
+	int choice;                      //stores the users choice to sort by ascending or descending
+	char userInput[10];              //stores user input
 
 	/*sets up the stringsptr pointers to point to each individual string in the strings array*/
 	for(int i = 0; i<10; i++){
@@ -25,7 +25,7 @@ int main(void){
 	inputString(stringsptr);
 
 	puts("would you prefer to sort your string in Ascending order (A)");
-	puts("or decending order (B)? Please enter (A,B):");
+	puts("or descending order (B)? Please enter (A,B):");
 
 	//loop to ensure a correct input(a or b) from the user is entered
 	do{

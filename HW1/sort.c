@@ -1,6 +1,9 @@
 #include <string.h>
 #include "character_strings.h"
 
+/* a quick sort sorting algorithm that swaps the pointers in
+ * the pointers array in ascending or descending order depending
+ * on what direction is passed into the function*/
 void qsort(char *v[], int left, int right, char direction){
 	int i, last;
 	void swap(char *v[], int i, int j);
