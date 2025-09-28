@@ -25,7 +25,7 @@ debug: $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(TARGET)
 
 #runs the program
-run: build
+run: $(TARGET)
 	./$(TARGET)
 
 #delete build files

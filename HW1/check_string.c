@@ -11,10 +11,10 @@ int checkLegalCharacters(char *string_to_check){
 		if(char_to_check == EOF || char_to_check == 0x21 || char_to_check == 0x40 ||
 				char_to_check == 0x5E || char_to_check == 0x28 || 
 				char_to_check == 0x29){
-			printf("the character %c is not allowed\n", char_to_check);
+			printf("the character %c is not allowed\a\n", char_to_check);
 			return 1;
 		}else if(char_to_check >= 0x23 && char_to_check <= 0x25){
-			printf("the character %c is not allowed\n", char_to_check);
+			printf("the character %c is not allowed\a\n", char_to_check);
 			return 1;
 		}
 	}

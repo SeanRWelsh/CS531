@@ -3,8 +3,6 @@
 #include <ctype.h>
 #include <string.h>
 
-int checkBuffer(); 
-
 int main(void){
 	char *stringsptr[MAXINPUT];      //array of pointers that point to the strings in
 					 //the strings array
