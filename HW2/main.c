@@ -40,7 +40,21 @@ int main(void){
 					printf("%d", selection);
 					break;
 				case 2:
-					printf("%d", selection);
+					int address[4];
+					scanf("%d.%d.%d.%d",address[0], address[1], address[2], 
+					       address[3]);
+					struct address_t *current;
+					//causes segmentation fault
+					current = find_address(address);
+					if(current == NULL){
+						puts("not address found");
+					}else{
+						printf("entry %d.%d.%d.%d %10s was found \n",
+							current->octet[0], current->octet[1],
+							current->octet[2], current->octet[3],
+							current->alias);
+					}
+
 					break;
 				case 3:
 					printf("%d", selection);
