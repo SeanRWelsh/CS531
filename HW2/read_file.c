@@ -11,7 +11,7 @@ void read_file(void){
 		return;
 	}
 	int octet[4];
-	char alias[11];
+	char alias[13], *line;
 	struct address_t *tail;
 
 	if(head == NULL){
@@ -26,8 +26,14 @@ void read_file(void){
 	//item to look into
 	//if name has a space only reads to the space or 10 characters whichever comes first
 	//this could mess up reading the rest of the items in the file
-	while(fscanf(fPtr, "%d.%d.%d.%d %10s", &octet[0], &octet[1], &octet[2], &octet[3],
-	      alias)==5){
+	while((line = get_input(fPtr)) != NULL){
+		sscanf(line,"%d.%d.%d.%d %12s", &octet[0], &octet[1], &octet[2], &octet[3],
+	      alias);
+		int len = strlen(alias)+1;
+		if(len > 10){
+			puts("name too long");
+			continue;
+		}
 		struct address_t *temp = (struct address_t*)malloc(sizeof(struct address_t));
 		temp->octet[0] = octet[0];
 		temp->octet[1] = octet[1];
@@ -47,6 +53,7 @@ void read_file(void){
 		}else{
 			free(temp);
 		}
+		free(line);
 	}
 	fclose(fPtr);
 }

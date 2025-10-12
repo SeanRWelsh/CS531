@@ -6,7 +6,7 @@
 
 struct address_t *head = NULL;
 int main(void){
-	char userInput[10];
+	char *user_input;
 	int selection;
 
 	/*	struct address_t *head = (struct address_t*)malloc(sizeof(struct address_t));
@@ -27,12 +27,8 @@ int main(void){
 		printf("%s %25s\n","* 8) Quit","*");
 		puts("***********************************");
 
-		if(fgets(userInput, sizeof(userInput), stdin)==NULL){
-			puts("EOF detected exiting");
-			exit(1);
-		}
-		userInput[strlen(userInput)-1] = '\0';
-		if((sscanf(userInput, "%d", &selection)) != 1 || selection < 1 || selection > 8){
+		user_input = get_input(stdin);
+		if((sscanf(user_input, "%d", &selection)) != 1 || selection < 1 || selection > 8){
 			puts("\n\nincorrect input please try again\n\n");
 		}else{
 			switch(selection){
@@ -41,18 +37,15 @@ int main(void){
 					break;
 				case 2:
 					int address[4];
-					scanf("%d.%d.%d.%d",address[0], address[1], address[2], 
-					       address[3]);
-					struct address_t *current;
+					scanf("%d.%d.%d.%d", &address[0], &address[1], &address[2], 
+					       &address[3]);
+					struct address_t *current = NULL;
 					//causes segmentation fault
 					current = find_address(address);
 					if(current == NULL){
 						puts("not address found");
 					}else{
-						printf("entry %d.%d.%d.%d %10s was found \n",
-							current->octet[0], current->octet[1],
-							current->octet[2], current->octet[3],
-							current->alias);
+						display_list_item(current);
 					}
 
 					break;
@@ -79,8 +72,7 @@ int main(void){
 			}
 		}
 	}
-
+	free(user_input);
 	printf("%d\n", selection);
 	return 0;
-
 }
