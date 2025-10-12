@@ -2,18 +2,16 @@
 #include <stdio.h>
 #include <string.h>
 
-int is_duplicate_name(struct address_t *list_item, struct address_t *input);
-int is_octet_in_range(struct address_t *input);
 void print_input_not_added(struct address_t *input, char *reason);
 
 int is_valid_input(struct address_t *input){
 	struct address_t *current = head;
-	if(is_octet_in_range(input) == 1){
+	if(is_octet_in_range(input->octet) == 1){
 		print_input_not_added(input, "octet out of range must be between 0 and 255");
 		return 0;
 	}
 	while(current != NULL){
-		if(is_duplicate_name(current, input) == 1){
+		if(is_duplicate_name(current->alias, input->alias) == 1){
 			print_input_not_added(input, "the name is already in the list");
 			return 0;
 		}else if(is_duplicate_address(current->octet, input->octet) == 1){
@@ -25,9 +23,9 @@ int is_valid_input(struct address_t *input){
 	return 1;
 }
 
-int is_octet_in_range(struct address_t *input){
+int is_octet_in_range(int *input){
 	for(int i = 0; i < 4; i++){
-		if( input->octet[i] > 255 || input->octet[i] < 0){
+		if( input[i] > 255 || input[i] < 0){
 			return 1;
 		}
 	}
@@ -39,8 +37,8 @@ int is_octet_in_range(struct address_t *input){
  * If it is found that the aliases are the same then is_duplicate_name informs the user by printing
  * the duplicate and informing them it was not added to the list and returns 1. If the names are
  * different then is_duplicate_name returns 0 */
-int is_duplicate_name(struct address_t *list_item, struct address_t *input){
-	if(strcasecmp(list_item->alias, input->alias) == 0){
+int is_duplicate_name(char *list_item, char *input){
+	if(strcasecmp(list_item, input) == 0){
 		return 1;
 	}
 	return 0;

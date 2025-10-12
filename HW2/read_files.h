@@ -6,12 +6,20 @@ struct address_t{
 	char alias[11];
 	struct address_t *next;
 };
-char * get_input(FILE *file);
 extern struct address_t *head;
+char * get_input(FILE *file);
 void read_file(void);
+
 void display_list();
 void display_list_item(struct address_t *item);
+void print_location_list(int octet1, int octet2);
+
 int is_valid_input(struct address_t *input);
-struct address_t * find_address(int octet[4]);
+int is_duplicate_name(char *list_item, char *input);
 int is_duplicate_address(int *list_item, int *input);
+int is_octet_in_range(int *input);
+
+struct address_t * find_address(char *alias);
+void add_to_list(char *input); 
+void delete_list_item(struct address_t *delete);
 #endif
