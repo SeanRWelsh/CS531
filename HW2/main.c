@@ -36,17 +36,22 @@ int main(void){
 					printf("%d", selection);
 					break;
 				case 2:
+					char *input = get_input(stdin);
 					int address[4];
-					scanf("%d.%d.%d.%d", &address[0], &address[1], &address[2], 
-					       &address[3]);
+
+					sscanf(input, "%d.%d.%d.%d", &address[0], &address[1],
+					       &address[2], &address[3]);
+
 					struct address_t *current = NULL;
-					//causes segmentation fault
 					current = find_address(address);
 					if(current == NULL){
-						puts("not address found");
+						puts("no address found");
 					}else{
+						puts("address found!!");
+						printf("%-15s %-10s\n", "Address", "Alias");
 						display_list_item(current);
 					}
+					free(input);
 
 					break;
 				case 3:

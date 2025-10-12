@@ -4,15 +4,20 @@
 
 int is_duplicate_name(struct address_t *list_item, struct address_t *input);
 int is_octet_in_range(struct address_t *input);
-void print_input_not_added(struct address_t *input);
+void print_input_not_added(struct address_t *input, char *reason);
 
 int is_valid_input(struct address_t *input){
 	struct address_t *current = head;
-	if(is_octet_in_range(input) == 1) return 0;
+	if(is_octet_in_range(input) == 1){
+		print_input_not_added(input, "octet out of range must be between 0 and 255");
+		return 0;
+	}
 	while(current != NULL){
-		if(is_duplicate_name(current, input) == 1 || 
-		   is_duplicate_address(current->octet, input->octet) == 1 ||
-		   is_octet_in_range(input) == 1){
+		if(is_duplicate_name(current, input) == 1){
+			print_input_not_added(input, "the name is already in the list");
+			return 0;
+		}else if(is_duplicate_address(current->octet, input->octet) == 1){
+			print_input_not_added(input, "the address is already in the list");
 			return 0;
 		}
 		current = current->next;
@@ -23,8 +28,6 @@ int is_valid_input(struct address_t *input){
 int is_octet_in_range(struct address_t *input){
 	for(int i = 0; i < 4; i++){
 		if( input->octet[i] > 255 || input->octet[i] < 0){
-			puts("address has an octet out of range must be between 0 and 255");
-			print_input_not_added(input);
 			return 1;
 		}
 	}
@@ -38,8 +41,6 @@ int is_octet_in_range(struct address_t *input){
  * different then is_duplicate_name returns 0 */
 int is_duplicate_name(struct address_t *list_item, struct address_t *input){
 	if(strcasecmp(list_item->alias, input->alias) == 0){
-		printf("The name %s is already in the list\n", input->alias);
-		print_input_not_added(input);
 		return 1;
 	}
 	return 0;
@@ -55,16 +56,12 @@ int is_duplicate_address(int *list_item, int *input){
 	   list_item[1] == input[1] && 
 	   list_item[2] == input[2] && 
 	   list_item[3] == input[3]){
-		printf("The address %d.%d.%d.%d is already in the list\n", input[0], input[1],
-			input[2],input[3]);
-	//	print_input_not_added(input);
 		return 1;
 	}
 	return 0;
 }
 
-void print_input_not_added(struct address_t *input){
-	printf("entry %d.%d.%d.%d %10s was not added to the list \n", input->octet[0], 
-		input->octet[1], input->octet[2],input->octet[3], 
-		input->alias);
+void print_input_not_added(struct address_t *input, char *reason){
+	printf("entry %d.%d.%d.%d %s was not added to the list %s\n",	input->octet[0], input->octet[1],
+		input->octet[2],input->octet[3], input->alias, reason);
 }
