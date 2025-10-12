@@ -139,7 +139,7 @@ int main(void){
 
 					break;
 				case 7:
-					printf("%d", selection);
+					write_file();
 					break;
 				case 8:
 					puts("thank you for using the program");
