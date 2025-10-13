@@ -31,6 +31,8 @@ int main(void){
 			switch(selection){
 				char *address, *alias; //string pointers for holding user input
 				int octet[4];          //integer array for holding an address that a user input
+				int len, octet1, octet2, is_valid;
+				char *user_input;
 
 				case 1: //add address to the linked list
 				puts("please enter and IPV4 address with a format between 0.0.0.0 and 255.255.255.255");
@@ -109,8 +111,7 @@ int main(void){
 				break;
 				
 				case 6:
-				int len, octet1, octet2, is_valid = 0;
-				char *user_input;
+				is_valid = 0;
 
 				while(is_valid == 0){
 					puts("please enter the first address octet (0-255)");
