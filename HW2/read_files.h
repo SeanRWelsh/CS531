@@ -7,7 +7,9 @@ struct address_t{
 	struct address_t *next;
 };
 extern struct address_t *head;
+
 char * get_input(FILE *file);
+
 void read_file(void);
 void write_file(void);
 
