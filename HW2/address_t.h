@@ -8,6 +8,12 @@ struct address_t{
 };
 extern struct address_t *head;
 
+void add_address();
+void look_up_address();
+void update_address();
+void delete_address();
+void aliases_for_location();
+
 char * get_input(FILE *file);
 
 void read_file(void);

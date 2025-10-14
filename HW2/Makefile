@@ -10,7 +10,7 @@
 ##########################################################################################
 CC = gcc
 CCFLAGS = -Wall -Werror -g
-OBJ = main.o file_IO.o manipulate_list.o validate_input.o print.o get_input.o
+OBJ = main.o file_IO.o manipulate_list.o validate_input.o print.o get_input.o add_address.o look_up_address.o update_address.o delete_address.o aliases_for_location.o
 TARGET = IPv4_addresses
 
 #default command
@@ -50,3 +50,18 @@ print.o: print.c address_t.h
 
 get_input.o: get_input.c
 	$(CC) $(CCFLAGS) -c get_input.c
+
+add_address.o: add_address.c address_t.h
+	$(CC) $(CCFLAGS) -c add_address.c
+
+look_up_address.o: look_up_address.c address_t.h
+	$(CC) $(CCFLAGS) -c look_up_address.c
+
+update_address.o: update_address.c address_t.h
+	$(CC) $(CCFLAGS) -c update_address.c
+
+delete_address.o: delete_address.c address_t.h
+	$(CC) $(CCFLAGS) -c delete_address.c
+
+aliases_for_location.o: aliases_for_location.c address_t.h
+	$(CC) $(CCFLAGS) -c aliases_for_location.c

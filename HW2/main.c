@@ -29,94 +29,20 @@ int main(void){
 			puts("\n\nincorrect input please try again\n\n"); //verifies user input and saves it as an int
 		}else{
 			switch(selection){
-				char *address, *alias; //string pointers for holding user input
-				int octet[4];          //integer array for holding an address that a user input
-				int len, octet1, octet2, is_valid;
-				char *user_input;
-
-				case 1: //add address to the linked list
-				puts("please enter an IPV4 address with a format between 0.0.0.0 and 255.255.255.255");
-				address = get_input(stdin); //collects user input for an address as a string
-				puts("please enter an alias for this address no longer than 10 characters");
-				alias = get_input(stdin); //collects user input for an alias as a string
-				int combined_len = strlen(address) +1 +strlen(alias) + 1;
-				char *combined_string = malloc(combined_len);
-				snprintf(combined_string, combined_len, "%s %s", address, alias);
-				add_to_list(combined_string);
-				//add_to_list(strcat(strcat(address, " "), alias)); //verifies user input and if in appropriate ranges adds to list
-				free(combined_string);
-				free(address);
-				free(alias);
+				case 1: 
+				add_address();
 				break;
 
 				case 2:
-				puts("please enter the alias you would like the address for");
-				alias = get_input(stdin); //collects user input for an alias as a string
-				struct address_t *current = NULL;
-				current = find_address(alias); //if the address a user is looking for is found the node containing it is saved to current
-				if(current == NULL){
-					puts("no address found");
-				}else{
-					puts("address found!!");
-					printf("%-15s %-10s\n", "Address", "Alias");
-					display_list_item(current);
-				}
-				free(alias);
-				break;
+				look_up_address();
+				break;								
 
 				case 3:
-				is_valid = 0;
-				puts("please enter the alias for the address you would like to update");
-				alias = get_input(stdin); //collects user input for an alias as a string
-				struct address_t *update = find_address(alias); //if the address a user is looking for is found the node containing it is saved to current
-				if(update == NULL){
-					puts("No address with that alias in the list");
-				}else{
-					puts("current item selected");
-					printf("%-15s %-10s\n", "Address", "Alias");
-					display_list_item(update); //prints out node that will be modified
-					puts("please enter a new address");
-					address = get_input(stdin); //collects user input for an address as a string
-					
-					if(sscanf(address, "%d.%d.%d.%d", &octet[0], &octet[1], 
-							&octet[2], &octet[3]) != 4){
-						puts("syntax error no updates were made please try again");
-					}else{
-						struct address_t *current = head;
-						while(current != NULL){
-							if(is_duplicate_address(current->octet, octet) == 1){
-								puts("update could not be completed. This address is already in the list");
-								is_valid +=1;
-								break;
-							}
-							current = current->next;
-						}
-						if(is_octet_in_range(octet) == 1){
-							is_valid +=1;
-							puts("update could not be completed. An octet is out of range");
-						}else if(is_valid == 0){
-							update->octet[0] = octet[0];
-							update->octet[1] = octet[1];
-							update->octet[2] = octet[2];
-							update->octet[3] = octet[3];
-							display_list_item(update); //prints out node after it has been modified
-						}
-					}
-					free(address);
-				}
-				free(alias);
+				update_address();	
 				break;
 
 				case 4:
-				puts("please enter the alias for the address you would like to update");
-				alias = get_input(stdin); //collects user input for an alias as a string
-				struct address_t *delete = find_address(alias); //if the address a user is looking for is found the node containing it is saved to current
-				if(delete == NULL){
-					puts("No address with that alias in the list");
-				}else{
-					delete_list_item(delete);
-				}
-				free(alias);
+				delete_address();
 				break;
 
 				case 5:
@@ -124,38 +50,7 @@ int main(void){
 				break;
 				
 				case 6:
-				is_valid = 0;
-
-				while(is_valid == 0){
-					puts("please enter the first address octet (0-255)");
-					user_input = get_input(stdin); //collects the first octet from the user as a string
-					len = sscanf(user_input, "%d", &octet1); //converts address from a string to an int. If successfull saves 1 in len
-					if(len != 1 || octet1 < 0 || octet1 > 255){
-						puts("invalid input please try again");
-					}else{
-						is_valid = 1;
-					}
-					free(user_input);
-					len = 0;
-				}
-
-				is_valid = 0;
-
-				while(is_valid == 0){
-					puts("please enter the second address octet (0-255)");
-					user_input = get_input(stdin); //collects the first octet from the user as a string
-					len = sscanf(user_input, "%d", &octet2); //converts address from a string to an int. If successfull saves 1 in len
-					if(len != 1 || octet2 < 0 || octet2 > 255){
-						puts("invalid input please try again");
-					}else{
-						is_valid = 1;
-					}
-					free(user_input);
-					len = 0;
-				}
-				is_valid = 0;
-
-				print_location_list(octet1, octet2); //prints out nodes in the location specified by the user or an error message if none
+				aliases_for_location();
 				break;
 
 				case 7:
