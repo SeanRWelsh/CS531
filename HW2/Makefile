@@ -10,7 +10,7 @@
 ##########################################################################################
 CC = gcc
 CCFLAGS = -Wall -Werror -g
-OBJ = main.o read_file.o manipulate_list.o validate_input.o print.o get_input.o
+OBJ = main.o file_IO.o manipulate_list.o validate_input.o print.o get_input.o
 TARGET = IPv4_addresses
 
 #default command
@@ -33,19 +33,19 @@ clean:
 	rm -rf $(OBJ) $(TARGET)
 
 #compiles and sets dependencies for the object files
-main.o: main.c read_files.h
+main.o: main.c address_t.h
 	$(CC) $(CCFLAGS) -c main.c
 
-read_file.o: read_file.c read_files.h
-	$(CC) $(CCFLAGS) -c read_file.c
+file_IO.o: file_IO.c address_t.h
+	$(CC) $(CCFLAGS) -c file_IO.c
 
-manipulate_list.o: manipulate_list.c read_files.h
+manipulate_list.o: manipulate_list.c address_t.h
 	$(CC) $(CCFLAGS) -c manipulate_list.c
 
-validate_input.o: validate_input.c read_files.h
+validate_input.o: validate_input.c address_t.h
 	$(CC) $(CCFLAGS) -c validate_input.c
 
-print.o: print.c read_files.h
+print.o: print.c address_t.h
 	$(CC) $(CCFLAGS) -c print.c
 
 get_input.o: get_input.c

@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "read_files.h"
+#include "address_t.h"
 
 /* read_file uses fopen to open CS531_Inet.txt and stores that file in fPtr. it then utilizes
  * get_input by passing in fPtr to read each line in the file one by one and add it to the linked list

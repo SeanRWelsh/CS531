@@ -1,4 +1,4 @@
-#include "read_files.h"
+#include "address_t.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -33,8 +33,11 @@ void add_to_list(char *input){
 			tail = tail->next;
 		}
 	}
-	sscanf(input,"%d.%d.%d.%d %12s", &octet[0], &octet[1], &octet[2], &octet[3],
-	       alias);
+	if(sscanf(input,"%d.%d.%d.%d %12s", &octet[0], &octet[1], &octet[2], &octet[3],
+	       alias) != 5){
+		puts("invalid syntax. Nothing was added to the list please try again");
+		return;
+	}
 	int len = strlen(alias)+1;
 	if(len > 10){
 		puts("name too long");
