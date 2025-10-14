@@ -1,5 +1,6 @@
 #include "address_t.h"
 #include <stdlib.h>
+#include <string.h>
 
 void delete_address(){
 	char *alias; //string pointer for user input
@@ -9,9 +10,19 @@ void delete_address(){
 	if(delete == NULL){
 		puts("No address with that alias in the list");
 	}else{
-		printf("%s", "deleting ");
+		char *confirm;
+		printf("%s", "are you sure you want to delete ");
 		display_list_item(delete);
-		delete_list_item(delete);
+		printf("%s","[y/n]");
+		confirm = get_input(stdin);
+		if(strcasecmp(confirm, "y") == 0){
+			printf("%s", "deleting ");
+			display_list_item(delete);
+			delete_list_item(delete);
+		}else{
+			puts("ok no items deleted");
+		}
+		free(confirm);
 	}
 	free(alias);
 }
