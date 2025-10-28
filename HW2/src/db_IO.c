@@ -9,5 +9,6 @@ MYSQL * connect(){
 		fprintf(stderr, "\nError %s [%d]\n", mysql_error(conn), mysql_errno(conn));
 		exit(1);
 	}
+	puts("successful connection");
 	return conn;
 }

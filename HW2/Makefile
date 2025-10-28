@@ -33,6 +33,7 @@ EXE_DIR := application
 CC := gcc
 CCFLAGS := -Wall -Werror -g -I$(INC_DIR)
 CFLAGS_db_IO := $(shell mysql_config --cflags)
+CFLAGS_main := $(shell mysql_config --cflags)
 
 # Target executable name
 TARGET := $(EXE_DIR)/IPv4_addresses
