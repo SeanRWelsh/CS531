@@ -3,65 +3,78 @@
 #                               using a GNU C complier                                   #
 #                                                                                        #
 # Compiler flags:                                                                        #
-#    -g      -- Enable debugging                                                         #
-#    -Wall   -- Turn on all warnings                                                     #
-#    -Werror -- Treat warnings as errors                                                 #
+#    -g            -- Enable debugging                                                   #
+#    -Wall         -- Turn on all warnings                                               #
+#    -Werror       -- Treat warnings as errors                                           #
+#    -I$(INC_DIR)  -- Tells compiler to add a directory to the list of paths it searches #
+#                     for header files during compilation                                #
 #                                                                                        #
 ##########################################################################################
-CC = gcc
-CCFLAGS = -Wall -Werror -g
-OBJ = main.o file_IO.o manipulate_list.o validate_input.o print.o get_input.o add_address.o look_up_address.o update_address.o delete_address.o aliases_for_location.o
-TARGET = IPv4_addresses
+
+#ANSI Colors for compile/link messages:
+BLACK := \033[0,30m
+RED   := \033[0;31m
+GREEN := \033[0;32m
+YELLOW:= \033[0;33m
+BLUE  := \033[0;34m
+PURPLE:= \033[0,35m
+CYAN  := \033[0,36m
+GREY  := \033[0,37m
+RESET := \033[0m
+#************************************************************************************************
+
+# Directories
+SRC_DIR := src
+OBJ_DIR := build_obj
+INC_DIR := include
+EXE_DIR := application
+
+# Compiler and flags
+CC := gcc
+CCFLAGS := -Wall -Werror -g -I$(INC_DIR)
+
+# Target executable name
+TARGET := $(EXE_DIR)/IPv4_addresses
+
+# Finad all .c files in SRC_DIR
+SRCS := $(wildcard $(SRC_DIR)/*.c)
+
+# Create matching .o paths in OBJ_DIR
+# patsubst is a pattern substitution function $(patsubst patter, replacement, text)
+# % is a wildcard placeholder
+OBJS := $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 
 #default command
-all: build
+all: $(TARGET)
 
-# build the program without debug flags
-build: $(OBJ)
-	$(CC) $(OBJ) -o $(TARGET)
+# Link step
+# | enables order-only prerequisites if any .o file changes then $(TARGET) gets rebuilt
+# but $(EXE_DIR) makes sure the directory exists before running the build but does not
+# trigger a rebuild of $(TARGET) if only that directory changed
+# @echo the @ suppresses the command echo so make doesnt print the command itself
+# $@ is an automatic variable that expands to the name of the target currently being built
+$(TARGET): $(OBJS) | $(EXE_DIR)
+	@echo "$(RED)Linking..... teh source files to object files....$(RESET)"
+	$(CC) $(OBJS) -o $@
 
-#build the program with debug flags
-debug: $(OBJ)
-	$(CC) $(CCFLAGS) $(OBJ) -o $(TARGET)
+# Compile each .c file into .o
+# $< Automatic variable meaning "the first prerequisite
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	@echo "$(GREEN)Compiling $<.....$(RESET)"
+	$(CC) $(CFLAGS) -c $< -o $@
 
-#runs the program
-run: $(TARGET)
-	./$(TARGET)
+# Create build directories if they don't exist
+# -p flag creates the entire path, including any missing parent directories.
+#  No error if the directory already exists just does nothing
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
 
-#delete build files
+$(EXE_DIR):
+	mkdir -p $(EXE_DIR)
+
+run:
+	$(TARGET)
+
 clean:
-	rm -rf $(OBJ) $(TARGET)
-
-#compiles and sets dependencies for the object files
-main.o: main.c address_t.h
-	$(CC) $(CCFLAGS) -c main.c
-
-file_IO.o: file_IO.c address_t.h
-	$(CC) $(CCFLAGS) -c file_IO.c
-
-manipulate_list.o: manipulate_list.c address_t.h
-	$(CC) $(CCFLAGS) -c manipulate_list.c
-
-validate_input.o: validate_input.c address_t.h
-	$(CC) $(CCFLAGS) -c validate_input.c
-
-print.o: print.c address_t.h
-	$(CC) $(CCFLAGS) -c print.c
-
-get_input.o: get_input.c
-	$(CC) $(CCFLAGS) -c get_input.c
-
-add_address.o: add_address.c address_t.h
-	$(CC) $(CCFLAGS) -c add_address.c
-
-look_up_address.o: look_up_address.c address_t.h
-	$(CC) $(CCFLAGS) -c look_up_address.c
-
-update_address.o: update_address.c address_t.h
-	$(CC) $(CCFLAGS) -c update_address.c
-
-delete_address.o: delete_address.c address_t.h
-	$(CC) $(CCFLAGS) -c delete_address.c
-
-aliases_for_location.o: aliases_for_location.c address_t.h
-	$(CC) $(CCFLAGS) -c aliases_for_location.c
+	rm -rf $(OBJ_DIR)/*.o
+	rm -rf *~
