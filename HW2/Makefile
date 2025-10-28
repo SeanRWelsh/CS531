@@ -32,6 +32,7 @@ EXE_DIR := application
 # Compiler and flags
 CC := gcc
 CCFLAGS := -Wall -Werror -g -I$(INC_DIR)
+CFLAGS_db_IO := $(shell mysql_config --cflags)
 
 # Target executable name
 TARGET := $(EXE_DIR)/IPv4_addresses
@@ -54,14 +55,14 @@ all: $(TARGET)
 # @echo the @ suppresses the command echo so make doesnt print the command itself
 # $@ is an automatic variable that expands to the name of the target currently being built
 $(TARGET): $(OBJS) | $(EXE_DIR)
-	@echo "$(RED)Linking..... teh source files to object files....$(RESET)"
-	$(CC) $(OBJS) -o $@
+	@echo "$(RED)Linking..... $< source files to object files....$(RESET)"
+	$(CC) $(OBJS) -o $@ $(shell mysql_config --libs)
 
 # Compile each .c file into .o
 # $< Automatic variable meaning "the first prerequisite
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	@echo "$(GREEN)Compiling $<.....$(RESET)"
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CCFLAGS) $(CFLAGS_$*) -c $< -o $@ 
 
 # Create build directories if they don't exist
 # -p flag creates the entire path, including any missing parent directories.
