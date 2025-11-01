@@ -11,7 +11,7 @@ void look_up_address(){
 	}else{
 		puts("address found!!");
 		printf("%-15s %-10s\n", "Address", "Alias");
-		display_list_item(current);
+		display_list_itemf(current);
 	}
 	free(alias);
 }

@@ -2,16 +2,12 @@
 #include <stdlib.h>
 #include "address_t.h"
 #include <mysql.h>
-
-extern MYSQL * connect();
 struct address_t *head = NULL;
 int main(void){
 	char *menu_selection; //holds input from the user in string format
 	int selection;        //holds input from the user in integer format
-
-	read_file(); //read in data from file CS531.txt
-	connect();
-
+	read_file();
+	my_connect();
 	//main part of the program continues to loop through the menu until the user chooses to exit
 	while(1){
 		puts("***********************************");
@@ -56,7 +52,8 @@ int main(void){
 				break;
 
 				case 7:
-				write_file(); //saves the linked list to a file specified by the user
+				save_db();
+				//write_file(); //saves the linked list to a file specified by the user
 				break;
 
 				case 8:
@@ -74,5 +71,5 @@ int main(void){
 		}
 		free(menu_selection);
 	}
-	return 0;
+	return 0; 
 }

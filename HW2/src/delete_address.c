@@ -12,12 +12,12 @@ void delete_address(){
 	}else{
 		char *confirm;
 		printf("%s", "are you sure you want to delete ");
-		display_list_item(delete);
+		display_list_itemf(delete);
 		printf("%s","[y/n]");
 		confirm = get_input(stdin);
 		if(strcasecmp(confirm, "y") == 0){
 			printf("%s", "deleting ");
-			display_list_item(delete);
+			display_list_itemf(delete);
 			delete_list_item(delete);
 		}else{
 			puts("ok no items deleted");

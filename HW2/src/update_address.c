@@ -14,7 +14,7 @@ void update_address(){
 	}else{
 		puts("current item selected");
 		printf("%-15s %-10s\n", "Address", "Alias");
-		display_list_item(update); //prints out node that will be modified
+		display_list_itemf(update); //prints out node that will be modified
 		puts("please enter a new address");
 		address = get_input(stdin); //collects user input for an address as a string
 
@@ -39,7 +39,7 @@ void update_address(){
 				update->octet[1] = octet[1];
 				update->octet[2] = octet[2];
 				update->octet[3] = octet[3];
-				display_list_item(update); //prints out node after it has been modified
+				display_list_itemf(update); //prints out node after it has been modified
 			}
 		}
 		free(address);

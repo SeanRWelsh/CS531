@@ -12,14 +12,14 @@ void display_list(){
 		while(current != NULL){
 			if(count == 0) printf("%-15s %-10s\n", "Address", "Alias");
 			count++;
-			display_list_item(current);
+			display_list_itemf(current);
 			current = current->next;
 		}
 	}
 }
 
-/* display_list_item accepts one address_t structure converts it to a string and then prints it out*/
-void display_list_item(struct address_t *item){
+/* display_list_itemf accepts one address_t structure converts it to a string and then prints it out*/
+void display_list_itemf(struct address_t *item){
 	char return_string[50], ip[16];
 	snprintf(ip, sizeof(ip), "%d.%d.%d.%d", item->octet[0], item->octet[1], item-> octet[2],
 		 item->octet[3]);
@@ -40,7 +40,7 @@ void print_location_list(int octet1, int octet2){
 		if(octet1 == current->octet[0] && octet2 == current->octet[1]){
 			if(count == 0) printf("%-15s %-10s\n", "Address", "Alias");
 			count++;
-			display_list_item(current);
+			display_list_itemf(current);
 		}
 		current = current->next;
 	}
