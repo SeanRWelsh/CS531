@@ -6,8 +6,9 @@ struct address_t *head = NULL;
 int main(void){
 	char *menu_selection; //holds input from the user in string format
 	int selection;        //holds input from the user in integer format
-	read_file();
+//	read_file();
 	my_connect();
+	read_db();
 	//main part of the program continues to loop through the menu until the user chooses to exit
 	while(1){
 		puts("***********************************");
