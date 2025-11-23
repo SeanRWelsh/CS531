@@ -1,0 +1,20 @@
+Version:	1.0	
+Version:        1.1 (Basic upgrade)
+Version:	1.2 Table is added in this upgrade. This table keeps track of duplicate names & tabulates them and
+		    displays in a sorted manner. Additional sort function is added in the sort.c file to sort the
+		    newly created list that stores the name and its number of occurence. 
+Version:        1.3 (Delete function needs to be made more robust than it is right now.....in progress......!!!!!!!)
+		      1. Makefile is updated.... build folder is changed to build_obj which saves
+		         all the object files
+		      2. executable output directory is changed to application
+		      3. clear is deleted from the Makefile
+		      4. Delete function was cleaned to make it more efficient. There were some duplicates.
+		         After deleting the node, pointer was moving back to the first node therefore spending
+			 more time to go thru the list. This is solved.
+		      5. More comments are added. 
+Version:	1.4 Undo and Redo features to be added in this upgrade.
+		      1. Keep track of history. if deleted, insert. if inserted, delete
+		      Note: CS531 students can add this function to this program. 
+Version:        1.5 (Future Upgrade.... to be considered)
+
+Email: ssainju@gmu.edu
