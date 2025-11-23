@@ -2,7 +2,6 @@
 #include <string.h>
 #include "character_strings.h"
 
-
 void inputString(char **stringsptr){
 	char userInput[100];
 	printf("Please enter 10 strings. Strings will be seperated by the enter key\n");
@@ -13,8 +12,11 @@ void inputString(char **stringsptr){
 		 * additional characters.*/
 		fgets(userInput, sizeof(userInput), stdin);
 
-		/*to remove the unwanted \n use strlen to find the last character '\n' and
-		 * -1 to account for the 0 offset and replace with '\0' character*/
+		/*checks to ensure the string a user input is a legal string if not
+		 * a legal string the program does nothing with the string and reduces
+		 * i by 1 in order to re-run this iteration of the loop until the user
+		 * enters a legal string. If a legal string is entered then the users 
+		 * input gets copied into the string array */
 		if(checkStringLen(userInput) || checkLegalCharacters(userInput) ||
 				checkDuplicate(userInput, stringsptr, i)){
 			i--;
@@ -22,51 +24,7 @@ void inputString(char **stringsptr){
 			strcpy(*(stringsptr+i), userInput);
 		}
 
-
-		printf("total number of strings accepted so far  is %d \n", i);
+		printf("total number of strings accepted so far  is %d \n", i+1);
+		puts("please enter next string");
 	}
-}
-
-int checkLegalCharacters(char *string_to_check){
-	for(int j = 0, char_to_check; (char_to_check = *(string_to_check+j)) != '\0'; j++){
-		if(char_to_check == EOF || char_to_check == 0x21 || char_to_check == 0x40 ||
-				char_to_check == 0x5E || char_to_check == 0x28 || 
-				char_to_check == 0x29){
-			printf("the character %c is not allowed\n", char_to_check);
-			return 1;
-		}else if(char_to_check >= 0x23 && char_to_check <= 0x25){
-			printf("the character %c is not allowed\n", char_to_check);
-			return 1;
-		}
-
-		printf("current char = %c\n", char_to_check);
-	}
-	return 0;
-}
-
-int checkDuplicate(char *string_to_check, char **string_array, int i){
-
-	for(int j = 0; j<i; j++){
-		if(strcmp(string_to_check, *(string_array+j)) == 0){
-			printf("string \" %s \" has already been entered please try again\n",
-					string_to_check);
-			return 1;
-		}
-	}
-	return 0;
-}
-
-int checkStringLen(char *string_to_check){
-	int length_of_string = strlen(string_to_check);
-	if(length_of_string > 26){
-		puts("string entered is too long please try again");
-		while(getchar() != EOF);
-		return 1;
-	}else if(length_of_string <= 2){
-		puts("string entered is to short please try again");
-		return 1;
-	}
-
-	string_to_check[strlen(string_to_check)-1] = '\0';
-	return 0;
 }
