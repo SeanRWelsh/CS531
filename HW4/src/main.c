@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "address_t.h"
 
-
+static void free_tree(struct address_t *node); // frees all tree nodes
 struct address_t *head = NULL;
 int main(void){
 	char *menu_selection; //holds input from the user in string format
@@ -10,7 +10,8 @@ int main(void){
 
 	read_file(); //read in data from file CS531.txt
 
-	//main part of the program continues to loop through the menu until the user chooses to exit
+	//main part of the program continues to loop through the menu until the user
+	//chooses to exit
 	while(1){
 		puts("***********************************");
 		printf("* %19s %13s\n", "Menu","*");
@@ -18,54 +19,53 @@ int main(void){
 		printf("%s %14s\n","* 2) Look up address","*");
 		printf("%s %15s\n","* 3) Update address","*");
 		printf("%s %15s\n","* 4) Delete address","*");
-		printf("%s %17s\n","* 5) Display list","*");
+		printf("%s %17s\n","* 5) Display tree","*");
 		printf("%s %1s\n","* 6) Display aliases for location","*");
 		printf("%s %17s\n","* 7) Save to file","*");
 		printf("%s %25s\n","* 8) Quit","*");
 		puts("***********************************");
 
 		menu_selection = get_input(stdin); //collects user input as a string
-		if((sscanf(menu_selection, "%d", &selection)) != 1 || selection < 1 || selection > 8){
-			puts("\n\nincorrect input please try again\n\n"); //verifies user input and saves it as an int
+		
+		//verifies user input and saves it as an int
+		if((sscanf(menu_selection, "%d", &selection)) != 1 || selection < 1 ||
+			 selection > 8){
+
+			puts("\n\nincorrect input please try again\n\n"); 
 		}else{
 			switch(selection){
-				case 1: 
+			case 1: 
 				add_address();
 				break;
 
-				case 2:
+			case 2:
 				look_up_address();
 				break;								
 
-				case 3:
+			case 3:
 				update_address();	
 				break;
 
-				case 4:
+			case 4:
 				delete_address();
 				break;
 
-				case 5:
-				display_list(); //prints out the linked list
+			case 5:
+				printf("%-15s %-10s\n", "Address", "Alias");
+				display_tree(head); //prints out the  tree
 				break;
-				
-				case 6:
+
+			case 6:
 				aliases_for_location();
 				break;
 
-				case 7:
-				write_file(); //saves the linked list to a file specified by the user
+			case 7:
+				write_file(); //saves the  tree to a file specified by the user
 				break;
 
-				case 8:
+			case 8:
 				puts("thank you for using the program");
-				struct address_t *temp;
-				//frees all linked list items before exiting
-				while(head != NULL){
-					temp = head;
-					head=head->next;
-					free(temp);
-				}
+				free_tree(head);
 				free(menu_selection);
 				exit(0); //exits the program
 			}
@@ -73,4 +73,11 @@ int main(void){
 		free(menu_selection);
 	}
 	return 0;
+}
+
+void free_tree(struct address_t *node){
+	if(node == NULL) return;
+	free_tree(node->left_child);
+	free_tree(node->right_child);
+	free(node);
 }
